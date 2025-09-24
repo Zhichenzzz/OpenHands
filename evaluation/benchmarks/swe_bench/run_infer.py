@@ -282,9 +282,17 @@ def initialize_runtime(
 
     # Set instance id and git configuration
     action = CmdRunAction(
-        command=f"""echo 'export SWE_INSTANCE_ID={instance['instance_id']}' >> ~/.bashrc && echo 'export PIP_CACHE_DIR=~/.cache/pip' >> ~/.bashrc && echo "alias git='git --no-pager'" >> ~/.bashrc && git config --global core.pager "" && git config --global diff.binary false"""
-    )
-    action.set_hard_timeout(600)
+    command=f"""bash -c "cat <<'EOF' >> ~/.bashrc
+export SWE_INSTANCE_ID={instance['instance_id']}
+export PIP_CACHE_DIR=~/.cache/pip
+alias git='git --no-pager'
+EOF
+git config --global core.pager ''
+git config --global diff.binary false"
+"""
+)
+
+    action.set_hard_timeout(100)
     logger.info(action, extra={'msg_type': 'ACTION'})
     obs = runtime.run_action(action)
     logger.info(obs, extra={'msg_type': 'OBSERVATION'})
