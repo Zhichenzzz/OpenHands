@@ -1,0 +1,22 @@
+#################################### Core ####################################
+[core]
+default_agent = "CodeActAgent"
+
+#################################### LLM #####################################
+[llm]
+model = "gpt-4o"
+
+# local vLLM (Qwen3-4B-Thinking-2507)
+[llm.qwen]
+api_key = "qwenkey"
+base_url = "http://127.0.0.1:8010/v1"
+model = "openai/Qwen3-4B-Thinking-2507"
+
+#################################### Agent ###################################
+[agent]
+enable_browsing = true
+enable_jupyter = true
+enable_cmd = true
+enable_editor = true
+enable_think = true
+enable_finish = true
